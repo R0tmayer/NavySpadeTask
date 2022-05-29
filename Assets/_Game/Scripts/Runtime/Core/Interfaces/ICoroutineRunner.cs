@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace NavySpade.Core.Root
+namespace NavySpade.Core.Interfaces
 {
     public interface ICoroutineRunner
     {

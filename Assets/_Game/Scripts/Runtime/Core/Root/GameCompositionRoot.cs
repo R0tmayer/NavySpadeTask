@@ -1,8 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using NavySpade.Core.Configs;
+using NavySpade.Core.EnemyInfrastructure;
 using NavySpade.Core.Interfaces;
+using NavySpade.Core.Managers;
 using NavySpade.Core.Old;
+using NavySpade.Core.PlayerInfrastructure;
 using NavySpade.Core.Scores;
 using UnityEngine;
 using UnityEngine.AI;

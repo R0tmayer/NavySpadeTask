@@ -1,9 +1,10 @@
-﻿
-using System;
+﻿using System;
+using NavySpade.Core.EnemyInfrastructure;
 using NavySpade.Core.Interfaces;
+using NavySpade.Core.Root;
 using UnityEngine;
 
-namespace NavySpade.Core.Root
+namespace NavySpade.Core.PlayerInfrastructure
 {
     public class PlayerCollisionController : IInitializable, IDisposable
     {

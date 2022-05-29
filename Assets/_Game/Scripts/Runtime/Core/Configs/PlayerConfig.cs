@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace NavySpade.Core.Old
+namespace NavySpade.Core.Configs
 {
     [CreateAssetMenu(menuName = "Configs/Player Config", fileName = "Player Config", order = 0)]
     public class PlayerConfig : ScriptableObject

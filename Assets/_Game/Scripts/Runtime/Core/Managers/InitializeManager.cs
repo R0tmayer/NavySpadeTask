@@ -1,8 +1,7 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using NavySpade.Core.Interfaces;
 
-namespace NavySpade.Core.Root
+namespace NavySpade.Core.Managers
 {
     public class InitializeManager
     {

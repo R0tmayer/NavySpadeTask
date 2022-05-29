@@ -1,10 +1,9 @@
 ﻿using System;
 using NavySpade.Core.Interfaces;
-using NavySpade.Core.Old;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace NavySpade.Core.Root
+namespace NavySpade.Core.PlayerInfrastructure
 {
     [Serializable]
     public class PlayerMoveController : ITickable

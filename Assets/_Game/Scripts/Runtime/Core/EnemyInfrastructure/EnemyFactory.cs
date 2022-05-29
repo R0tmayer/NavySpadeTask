@@ -1,7 +1,7 @@
 ﻿
 using UnityEngine;
 
-namespace NavySpade.Core.Root
+namespace NavySpade.Core.EnemyInfrastructure
 {
     public class EnemyFactory 
     {

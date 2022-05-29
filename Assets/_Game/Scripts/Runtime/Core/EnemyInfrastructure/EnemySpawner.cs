@@ -1,7 +1,8 @@
 ﻿using NavySpade.Core.Interfaces;
+using NavySpade.Core.Root;
 using UnityEngine;
 
-namespace NavySpade.Core.Root
+namespace NavySpade.Core.EnemyInfrastructure
 {
     public class EnemySpawner : IInitializable
     {
@@ -23,7 +24,7 @@ namespace NavySpade.Core.Root
                 var spawned = _enemyFactory.GetNewInstance();
                 spawned.transform.position = Extensions.GetRandomNavMeshSamplePosition(_walkableArea);
                 
-                if(spawned.TryGetComponent(out EnemyMovement enemyMovement))
+                if(spawned.TryGetComponent(out EnemyMoveController enemyMovement))
                     enemyMovement.Initialize();
             }
         }

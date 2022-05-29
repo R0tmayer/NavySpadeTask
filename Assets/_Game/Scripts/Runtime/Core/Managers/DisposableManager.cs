@@ -1,8 +1,7 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 
-namespace NavySpade.Core.Root
+namespace NavySpade.Core.Managers
 {
     public class DisposableManager
     {

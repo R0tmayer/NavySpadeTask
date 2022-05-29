@@ -1,9 +1,7 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using NavySpade.Core.Interfaces;
-using NavySpade.Core.Old;
 
-namespace NavySpade.Core.Root
+namespace NavySpade.Core.Managers
 {
     public class TickableManager
     {

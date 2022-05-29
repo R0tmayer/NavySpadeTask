@@ -1,5 +1,5 @@
 ﻿
-namespace NavySpade.Core.Root
+namespace NavySpade.Core.CrystalInfrastructure
 {
     public class CrystalSpawner
     {

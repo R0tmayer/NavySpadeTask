@@ -1,10 +1,11 @@
 ﻿using System;
+using NavySpade.Core.Configs;
 using NavySpade.Core.Interfaces;
 using NavySpade.Core.Old;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace NavySpade.Core.Root
+namespace NavySpade.Core.PlayerInfrastructure
 {
     public class Player : IInitializable, ITickable, IDisposable
     {

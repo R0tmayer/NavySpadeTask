@@ -1,7 +1,7 @@
 ﻿
 using UnityEngine;
 
-namespace NavySpade.Core.Old
+namespace NavySpade.Core.Configs
 {
     [CreateAssetMenu(menuName = "Configs/Game Config", fileName = "Game Config", order = 0)]
     public class GameConfig : ScriptableObject
