@@ -5,7 +5,7 @@ namespace NavySpade.Core.Managers
 {
     public class DisposableManager
     {
-        private IEnumerable<IDisposable> _disposables;
+        private readonly IEnumerable<IDisposable> _disposables;
 
         public DisposableManager(params IDisposable[] disposables)
         {

@@ -1,7 +1,7 @@
 ﻿using System;
 using NavySpade.Core.Configs;
 using NavySpade.Core.Interfaces;
-using NavySpade.Core.Old;
+using NavySpade.Core.Root;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -23,17 +23,17 @@ namespace NavySpade.Core.PlayerInfrastructure
             _animatorController = new AnimatorController(gameObject.GetComponent<Animator>());
         }
 
+        public void Initialize()
+        {
+            _collisionController.Initialize();
+            _moveController.MoveStarted += _animatorController.SetRunAnimation;
+            _moveController.DestinationReached += _animatorController.SetIdleAnimation;
+        }
+
         public void Collect(ICollectable collectable)
         {
             collectable.Collect();
             ItemCollected?.Invoke();
-        }
-
-        public void Initialize()
-        {
-            _collisionController.Initialize();
-            _moveController.StillMoving += _animatorController.SetRunAnimation;
-            _moveController.DestinationReached += _animatorController.SetIdleAnimation;
         }
 
         public void Tick()
@@ -43,7 +43,7 @@ namespace NavySpade.Core.PlayerInfrastructure
 
         public void Dispose()
         {
-            _moveController.StillMoving -= _animatorController.SetRunAnimation;
+            _moveController.MoveStarted -= _animatorController.SetRunAnimation;
             _moveController.DestinationReached -= _animatorController.SetIdleAnimation;
 
             _collisionController.Dispose();

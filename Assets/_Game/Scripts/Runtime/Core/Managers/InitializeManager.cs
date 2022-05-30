@@ -5,7 +5,7 @@ namespace NavySpade.Core.Managers
 {
     public class InitializeManager
     {
-        private IEnumerable<IInitializable> _initializables;
+        private readonly IEnumerable<IInitializable> _initializables;
 
         public InitializeManager(params IInitializable[] initializables)
         {

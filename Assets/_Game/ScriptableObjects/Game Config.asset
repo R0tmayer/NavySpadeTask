@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de704b163d434636a1b34a349fca9953, type: 3}
   m_Name: Game Config
   m_EditorClassIdentifier: 
-  _walkableCollider: {fileID: 6185920408117909873, guid: e4bab783ff892514ea7eac86710ca168, type: 3}
   _enemyPrefab: {fileID: 6127434063747846367, guid: 6a29b6890549dee4d88ff35624d10d98, type: 3}
-  _enemyCount: 5
+  _enemyCount: 15
   _crystalPrefab: {fileID: 0}

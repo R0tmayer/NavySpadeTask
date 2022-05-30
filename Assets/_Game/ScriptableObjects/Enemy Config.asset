@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Enemy Config
   m_EditorClassIdentifier: 
   _moveSpeed: 2
+  _movePeriod: 2

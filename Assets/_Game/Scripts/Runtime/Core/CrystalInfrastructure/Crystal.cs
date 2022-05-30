@@ -1,7 +1,7 @@
 ﻿using NavySpade.Core.Interfaces;
 using UnityEngine;
 
-namespace NavySpade.Core.Old
+namespace NavySpade.Core.CrystalInfrastructure
 {
     public class Crystal : MonoBehaviour, ICollectable
     {

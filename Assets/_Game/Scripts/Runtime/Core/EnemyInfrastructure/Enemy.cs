@@ -2,36 +2,41 @@
 using NavySpade.Core.Interfaces;
 using NavySpade.Core.Root;
 using UnityEngine;
+using UnityEngine.AI;
+using Object = UnityEngine.Object;
 
 namespace NavySpade.Core.EnemyInfrastructure
 {
     public class Enemy : IInitializable, IDisposable
     {
-        private readonly GameObject _gameObject;
-        private MonoBehaviourTriggerObserver _triggerObserver;
+        private readonly EnemyCollisionController _collisionController;
+        private readonly EnemyMoveController _moveController;
+        private readonly AnimatorController _animatorController;
 
-        public Enemy(GameObject gameObject)
+        public Enemy(GameObject gameObject, ICoroutineRunner coroutineRunner, int moveSpeed, int movePeriod,
+            Transform walkableArea)
         {
-            _gameObject = gameObject;
+            _moveController = new EnemyMoveController(coroutineRunner, gameObject.GetComponent<NavMeshAgent>(), moveSpeed, movePeriod, walkableArea);
+            _collisionController = new EnemyCollisionController(gameObject, this);
+            _animatorController = new AnimatorController(gameObject.GetComponent<Animator>());
+            
         }
 
         public void Initialize()
         {
-            _triggerObserver = _gameObject.AddComponent<MonoBehaviourTriggerObserver>();
-            _triggerObserver.TriggerEntered += OnCustomTriggerEnter;
+            _collisionController.Initialize();
+            _animatorController.SetRunAnimation();
+            _moveController.Initialize();
         }
 
-        private void OnCustomTriggerEnter(Collider other)
+        public void Collect(ICollectable collectable)
         {
-            if (other.TryGetComponent(out ICollectable collectable))
-            {
-                collectable.Collect();
-            }
+            collectable.Collect();
         }
 
         public void Dispose()
         {
-            _triggerObserver.TriggerEntered -= OnCustomTriggerEnter;
+            _collisionController.Dispose();
         }
     }
 }

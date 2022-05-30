@@ -13,13 +13,13 @@ namespace NavySpade.Core.EnemyInfrastructure
         private readonly Transform _walkableArea;
         private readonly int _movePeriod;
 
-        public EnemyMoveController(ICoroutineRunner coroutineRunner, NavMeshAgent agent, int initialSpeed, Transform walkableArea, int movePeriod)
+        public EnemyMoveController(ICoroutineRunner coroutineRunner, NavMeshAgent agent, int initialSpeed, int movePeriod, Transform walkableArea)
         {
             _coroutineRunner = coroutineRunner;
             _agent = agent;
-            _walkableArea = walkableArea;
-            _movePeriod = movePeriod;
             _agent.speed = initialSpeed;
+            _movePeriod = movePeriod;
+            _walkableArea = walkableArea;
         }
 
         public void Initialize()

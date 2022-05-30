@@ -12,7 +12,7 @@ namespace NavySpade.Core.PlayerInfrastructure
         private Camera _camera;
 
         public event Action DestinationReached;
-        public event Action StillMoving;
+        public event Action MoveStarted;
 
         public PlayerMoveController(NavMeshAgent agent, Camera camera, int initialSpeed)
         {
@@ -29,18 +29,16 @@ namespace NavySpade.Core.PlayerInfrastructure
 
                 if (Physics.Raycast(ray, out var hit, float.MaxValue))
                 {
+                    MoveStarted?.Invoke();
                     _agent.SetDestination(hit.point);
                 }
             }
         }
-        
+
         private void CheckDestinationReached()
         {
             if (_agent.pathPending)
-            {
-                StillMoving?.Invoke();
                 return;
-            }
 
             if (_agent.pathStatus == NavMeshPathStatus.PathComplete &&
                 _agent.remainingDistance <= 0.05f)

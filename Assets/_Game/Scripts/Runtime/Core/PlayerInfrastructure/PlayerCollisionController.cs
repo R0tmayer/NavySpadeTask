@@ -25,13 +25,13 @@ namespace NavySpade.Core.PlayerInfrastructure
         public void Initialize()
         {
             _collisionObserver = _gameObject.AddComponent<MonoBehaviourCollisionObserver>();
-            _collisionObserver.MonoBehaviourCollisionEntered += OnCustomCollisionEnter;
+            _collisionObserver.MonoBehaviourCollisionEntered += OnCollisionEnter;
             
             _triggerObserver = _gameObject.AddComponent<MonoBehaviourTriggerObserver>();
-            _triggerObserver.TriggerEntered += OnCustomTriggerEnter;
+            _triggerObserver.TriggerEntered += OnTriggerEnter;
         }
         
-        private void OnCustomTriggerEnter(Collider other)
+        private void OnTriggerEnter(Collider other)
         {
             if (other.TryGetComponent(out ICollectable collectable))
             {
@@ -39,7 +39,7 @@ namespace NavySpade.Core.PlayerInfrastructure
             }
         }
 
-        private void OnCustomCollisionEnter(Collision collision)
+        private void OnCollisionEnter(Collision collision)
         {
             if (collision.gameObject.TryGetComponent(out Enemy _))
             {
@@ -49,8 +49,8 @@ namespace NavySpade.Core.PlayerInfrastructure
         
         public void Dispose()
         {
-            _collisionObserver.MonoBehaviourCollisionEntered -= OnCustomCollisionEnter;
-            _triggerObserver.TriggerEntered -= OnCustomTriggerEnter;
+            _collisionObserver.MonoBehaviourCollisionEntered -= OnCollisionEnter;
+            _triggerObserver.TriggerEntered -= OnTriggerEnter;
         }
     }
 }

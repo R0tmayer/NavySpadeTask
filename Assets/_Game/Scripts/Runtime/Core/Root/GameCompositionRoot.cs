@@ -1,15 +1,10 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using NavySpade.Core.Configs;
 using NavySpade.Core.EnemyInfrastructure;
 using NavySpade.Core.Interfaces;
 using NavySpade.Core.Managers;
-using NavySpade.Core.Old;
 using NavySpade.Core.PlayerInfrastructure;
 using NavySpade.Core.Scores;
 using UnityEngine;
-using UnityEngine.AI;
 
 namespace NavySpade.Core.Root
 {
@@ -20,6 +15,7 @@ namespace NavySpade.Core.Root
         [SerializeField] private EnemyConfig _enemyConfig;
         [SerializeField] private PlayerConfig _playerConfig;
         [SerializeField] private Transform _enemyContainer;
+        [SerializeField] private Transform _walkableArea;
         [SerializeField] private ScoreView _scoreView;
         [SerializeField] private BestScoreView _bestScoreView;
         [SerializeField] private Camera _camera;
@@ -32,17 +28,15 @@ namespace NavySpade.Core.Root
         private void Awake()
         {
             var player = new Player(_playerGameObject, _camera, _playerConfig);
-
-            var enemyFactory = new EnemyFactory(_gameConfig.EnemyPrefab, _enemyContainer);
-            var enemySpawner = new EnemySpawner(enemyFactory, _gameConfig.WalkableCollider, _gameConfig.EnemyCount);
-
+            
+            var enemySpawner = new EnemySpawner(_gameConfig.EnemyPrefab, _enemyContainer, this, 
+                _enemyConfig, _walkableArea, _gameConfig.EnemyCount);
 
             var score = new Score();
             var bestScore = new BestScore(score);
 
             _scoreView.Construct(score);
             _bestScoreView.Construct(bestScore);
-
 
             var scoreSystem = new ScoreSystem(player, score);
             _saveSystem = new SaveSystem(bestScore);
