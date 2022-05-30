@@ -30,13 +30,11 @@ namespace NavySpade.Core.Health
         public void ReceiveDamage()
         {
             Value--;
-
             Changed?.Invoke(Value);
 
             if (Value <= 0)
             {
                 Died?.Invoke();
-                Debug.Log($"Player DEAD. Life's point is {Value}");
             }
         }
     }
