@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using NavySpade.Core.Interfaces;
-using NavySpade.Core.Root;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -37,7 +36,7 @@ namespace NavySpade.Core.EnemyInfrastructure
                 if (timer >= _movePeriod)
                 {
                     timer = 0;
-                    _agent.SetDestination(Extensions.GetRandomNavMeshSamplePosition(_walkableArea));
+                    _agent.SetDestination(StrongExtensions.StrongExtensions.GetRandomNavMeshSamplePosition(_walkableArea));
                 }
                 
                 yield return null;

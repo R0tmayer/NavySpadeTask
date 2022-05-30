@@ -3,7 +3,6 @@ using NavySpade.Core.Interfaces;
 using NavySpade.Core.Root;
 using UnityEngine;
 using UnityEngine.AI;
-using Object = UnityEngine.Object;
 
 namespace NavySpade.Core.EnemyInfrastructure
 {

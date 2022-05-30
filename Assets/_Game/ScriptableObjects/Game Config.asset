@@ -12,6 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de704b163d434636a1b34a349fca9953, type: 3}
   m_Name: Game Config
   m_EditorClassIdentifier: 
+  _cameraOffset: {x: 2, y: 8, z: -4}
   _enemyPrefab: {fileID: 6127434063747846367, guid: 6a29b6890549dee4d88ff35624d10d98, type: 3}
-  _enemyCount: 15
-  _crystalPrefab: {fileID: 0}
+  _enemySpawnCount: 15
+  _enemySpawnInterval: 1
+  _crystalPrefab: {fileID: 3729878594562868933, guid: 77561c4fcc96fcd4195c51d9828075b7, type: 3}
+  _crystalStartSpawnCount: 10
+  _crystalAdditionalSpawnCount: 20
+  _crystalAdditionalSpawnInterval: 0.5
+  _randomScoreIncome: {x: 3, y: 15}

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using NavySpade.Core.EnemyInfrastructure;
 using NavySpade.Core.Interfaces;
 using NavySpade.Core.Root;
 using UnityEngine;
@@ -13,36 +12,37 @@ namespace NavySpade.Core.PlayerInfrastructure
         private readonly Player _player;
         private readonly Collider _collider;
         private readonly ICoroutineRunner _coroutineRunner;
-        private readonly int _pauseCollisionTime;
+        private readonly WaitForSeconds _waitForCollisionPauseTime;
         private MonoBehaviourTriggerObserver _triggerObserver;
         private MonoBehaviourCollisionObserver _collisionObserver;
-        public event Action CrystalCollected;
+        private readonly DamageEffectController _damageEffectController;
         public event Action CollidedWithEnemy;
 
-        public PlayerCollisionController(GameObject gameObject, Player player, Collider collider, ICoroutineRunner coroutineRunner, int pauseCollisionTime)
+        public PlayerCollisionController(GameObject gameObject, Player player, Collider collider,
+            ICoroutineRunner coroutineRunner, int pauseCollisionTime, DamageEffectController damageEffectController)
         {
             _gameObject = gameObject;
             _player = player;
             _collider = collider;
             _coroutineRunner = coroutineRunner;
-            _pauseCollisionTime = pauseCollisionTime;
+            _damageEffectController = damageEffectController;
+            _waitForCollisionPauseTime = new WaitForSeconds(pauseCollisionTime);
         }
-        
+
         public void Initialize()
         {
             _collisionObserver = _gameObject.AddComponent<MonoBehaviourCollisionObserver>();
             _collisionObserver.CollisionEntered += OnCollisionEnter;
-            
+
             _triggerObserver = _gameObject.AddComponent<MonoBehaviourTriggerObserver>();
             _triggerObserver.TriggerEntered += OnTriggerEnter;
         }
-        
+
         private void OnTriggerEnter(Collider other)
         {
             if (other.TryGetComponent(out ICollectable collectable))
             {
                 _player.Collect(collectable);
-                CrystalCollected?.Invoke();
             }
         }
 
@@ -60,11 +60,13 @@ namespace NavySpade.Core.PlayerInfrastructure
         private IEnumerator PauseCollisionForSeconds()
         {
             _collider.enabled = false;
-            yield return new WaitForSeconds(_pauseCollisionTime);
+            _damageEffectController.ChangeMaterial();
+            yield return _waitForCollisionPauseTime;
+            _damageEffectController.ResetMaterial();
             _collider.enabled = true;
         }
 
-        
+
         public void Dispose()
         {
             _collisionObserver.CollisionEntered -= OnCollisionEnter;

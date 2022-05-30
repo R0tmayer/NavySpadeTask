@@ -1,6 +1,4 @@
 ﻿using System.Linq;
-using NavySpade.Core.Scores;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,7 +23,7 @@ namespace NavySpade.Core.Health
             if (_previousHealthValue < value)
                 _heartImages.FirstOrDefault(x => x.gameObject.activeInHierarchy == false)?.gameObject.SetActive(true);
             else
-                _heartImages.FirstOrDefault(x => x.gameObject.activeInHierarchy)?.gameObject.SetActive(false);
+                _heartImages.LastOrDefault(x => x.gameObject.activeInHierarchy)?.gameObject.SetActive(false);
 
             _previousHealthValue = value;
         }

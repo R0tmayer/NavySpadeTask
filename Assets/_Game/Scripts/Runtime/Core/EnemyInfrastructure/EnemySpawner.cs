@@ -1,7 +1,9 @@
-﻿using NavySpade.Core.Configs;
+﻿using System;
+using System.Collections;
+using NavySpade.Core.Configs;
 using NavySpade.Core.Interfaces;
-using NavySpade.Core.Root;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace NavySpade.Core.EnemyInfrastructure
 {
@@ -13,9 +15,14 @@ namespace NavySpade.Core.EnemyInfrastructure
         private readonly EnemyConfig _enemyConfig;
         private readonly Transform _walkableArea;
         private readonly int _spawnCount;
+        private readonly WaitForSeconds _waitForSpawnInterval;
+
+        private int _spawnedCount;
+
+        public event Action<int> Spawned;
 
         public EnemySpawner(GameObject prefab, Transform container, ICoroutineRunner coroutineRunner,
-            EnemyConfig enemyConfig, Transform walkableArea, int spawnCount)
+            EnemyConfig enemyConfig, Transform walkableArea, int spawnCount, float spawnInterval)
         {
             _prefab = prefab;
             _container = container;
@@ -23,6 +30,7 @@ namespace NavySpade.Core.EnemyInfrastructure
             _enemyConfig = enemyConfig;
             _walkableArea = walkableArea;
             _spawnCount = spawnCount;
+            _waitForSpawnInterval = new WaitForSeconds(spawnInterval);
         }
 
         public void Initialize()
@@ -30,7 +38,7 @@ namespace NavySpade.Core.EnemyInfrastructure
             SpawnWithRandomPositions();
         }
 
-        private void SpawnWithRandomPositions()
+        private IEnumerator SpawnCoroutine()
         {
             for (int i = 0; i < _spawnCount; i++)
             {
@@ -41,9 +49,17 @@ namespace NavySpade.Core.EnemyInfrastructure
                     _walkableArea);
 
                 enemy.Initialize();
+                spawned.transform.position = StrongExtensions.StrongExtensions.GetRandomNavMeshSamplePosition(_walkableArea);
+                _spawnedCount++;
+                Spawned?.Invoke(_spawnedCount);
 
-                spawned.transform.position = Extensions.GetRandomNavMeshSamplePosition(_walkableArea);
+                yield return _waitForSpawnInterval;
             }
+        }
+
+        private void SpawnWithRandomPositions()
+        {
+            _coroutineRunner.StartCoroutine(SpawnCoroutine());
         }
     }
 }

@@ -3,21 +3,21 @@ using NavySpade.Core.Interfaces;
 using TMPro;
 using UnityEngine;
 
-namespace NavySpade.Core.Scores
+namespace NavySpade.Core.EnemyInfrastructure
 {
-    public class BestScoreView : MonoBehaviour, IInitializable
+    public class EnemyView : MonoBehaviour, IInitializable
     {
         [SerializeField] private TMP_Text _text;
-        private BestScore _bestScore;
+        private EnemySpawner _enemySpawner;
 
-        public void Construct(BestScore bestScore)
+        public void Construct(EnemySpawner enemySpawner)
         {
-            _bestScore = bestScore;
+            _enemySpawner = enemySpawner;
         }
 
         public void Initialize()
         {
-            _bestScore.Changed += UpdateText;
+            _enemySpawner.Spawned += UpdateText;
         }
 
         private void UpdateText(int value)
@@ -27,7 +27,7 @@ namespace NavySpade.Core.Scores
 
         private void OnDisable()
         {
-            _bestScore.Changed -= UpdateText;
+            _enemySpawner.Spawned -= UpdateText;
         }
     }
 }

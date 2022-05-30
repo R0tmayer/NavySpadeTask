@@ -1,12 +1,11 @@
-﻿
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
-namespace NavySpade.Core.Root
+namespace NavySpade.Core.StrongExtensions
 {
-    public static class Extensions
+    public static class StrongExtensions
     {
         public static Vector3 GetRandomNavMeshSamplePosition(Transform walkableArea)
         {
