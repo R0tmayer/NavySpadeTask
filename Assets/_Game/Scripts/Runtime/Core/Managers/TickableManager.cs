@@ -5,7 +5,7 @@ namespace NavySpade.Core.Managers
 {
     public class TickableManager
     {
-        private readonly IEnumerable<ITickable> _tickables;
+        private readonly ITickable[] _tickables;
 
         public TickableManager(params ITickable[] tickables)
         {
@@ -14,9 +14,9 @@ namespace NavySpade.Core.Managers
 
         public void Tick()
         {
-            foreach (var initializable in _tickables)
+            for (int i = 0; i < _tickables.Length; i++)
             {
-                initializable.Tick();
+                _tickables[i].Tick();
             }
         }
     }

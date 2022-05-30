@@ -26,6 +26,7 @@ namespace NavySpade.Core.Root
         [SerializeField] private CrystalView _crystalView;
         [SerializeField] private BestScoreView _bestScoreView;
         [SerializeField] private Camera _camera;
+        [SerializeField] private Mediator _mediator;
 
         private SaveSystem _saveSystem;
         private InitializeManager _initializeManager;
@@ -35,16 +36,19 @@ namespace NavySpade.Core.Root
 
         private void Awake()
         {
-            var player = new Player(_playerGameObject, _camera, _skinnedMeshRenderer, _playerConfig, this);
+            Time.timeScale = 0;
+            
+            var player = new Player(_playerGameObject, _camera, _mediator, _skinnedMeshRenderer, _playerConfig, this);
 
             _cameraTracker = new CameraTracker(_camera, _playerGameObject.transform, _gameConfig.CameraOffset);
 
-            var enemySpawner = new EnemySpawner(_gameConfig.EnemyPrefab, _enemyContainer, this,
-                _enemyConfig, _walkableArea, _gameConfig.EnemySpawnCount, _gameConfig.EnemySpawnInterval);
-
-            var crystalSpawner = new CrystalSpawner(_gameConfig.CrystalPrefab, _crystalContainer, this, _walkableArea,
+            var crystalSpawner = new CrystalSpawner(_gameConfig.CrystalPrefab, _crystalContainer, player, this, _walkableArea,
                 _gameConfig.CrystalStartSpawnCount, _gameConfig.CrystalAdditionalSpawnCount,
                 _gameConfig.CrystalAdditionalSpawnInterval);
+            
+            var enemySpawner = new EnemySpawner(_gameConfig.EnemyPrefab, _enemyContainer, crystalSpawner, this,
+                _enemyConfig, _walkableArea, _gameConfig.EnemySpawnCount, _gameConfig.EnemySpawnInterval);
+
 
             var score = new Score(_gameConfig.RandomScoreIncome);
             var bestScore = new BestScore(score);
@@ -56,7 +60,7 @@ namespace NavySpade.Core.Root
             var scoreSystem = new ScoreSystem(player, score);
 
             _healthView.Construct(player.HealthComponent);
-            var healthSystem = new HealthSystem(player);
+            var healthSystem = new HealthSystem(player, _mediator);
 
             _saveSystem = new SaveSystem(bestScore);
 
@@ -75,6 +79,7 @@ namespace NavySpade.Core.Root
             _tickableManager = new TickableManager(player);
 
             _disposableManager = new DisposableManager(_saveSystem,
+                crystalSpawner,
                 healthSystem,
                 scoreSystem,
                 player);

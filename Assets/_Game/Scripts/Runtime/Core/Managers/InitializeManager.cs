@@ -5,7 +5,7 @@ namespace NavySpade.Core.Managers
 {
     public class InitializeManager
     {
-        private readonly IEnumerable<IInitializable> _initializables;
+        private readonly IInitializable[] _initializables;
 
         public InitializeManager(params IInitializable[] initializables)
         {
@@ -14,9 +14,9 @@ namespace NavySpade.Core.Managers
 
         public void Initialize()
         {
-            foreach (var initializable in _initializables)
+            for (int i = 0; i < _initializables.Length; i++)
             {
-                initializable.Initialize();
+                _initializables[i].Initialize();
             }
         }
     }

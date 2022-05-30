@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de704b163d434636a1b34a349fca9953, type: 3}
   m_Name: Game Config
   m_EditorClassIdentifier: 
-  _cameraOffset: {x: 2, y: 8, z: -4}
+  _cameraOffset: {x: 2.5, y: 7, z: -3.5}
   _enemyPrefab: {fileID: 6127434063747846367, guid: 6a29b6890549dee4d88ff35624d10d98, type: 3}
   _enemySpawnCount: 15
   _enemySpawnInterval: 1

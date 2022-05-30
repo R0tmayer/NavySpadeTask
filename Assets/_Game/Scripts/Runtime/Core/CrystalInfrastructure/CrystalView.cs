@@ -18,6 +18,7 @@ namespace NavySpade.Core.CrystalInfrastructure
         public void Initialize()
         {
             _crystalSpawner.Spawned += UpdateText;
+            _crystalSpawner.CrystalCollected += UpdateText;
         }
 
         private void UpdateText(int value)
@@ -28,6 +29,8 @@ namespace NavySpade.Core.CrystalInfrastructure
         private void OnDisable()
         {
             _crystalSpawner.Spawned -= UpdateText;
+            _crystalSpawner.CrystalCollected -= UpdateText;
+
         }
     }
 }

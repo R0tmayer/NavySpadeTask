@@ -1,29 +1,34 @@
 ﻿using System;
 using NavySpade.Core.Interfaces;
+using NavySpade.Core.Managers;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace NavySpade.Core.PlayerInfrastructure
 {
     [Serializable]
-    public class PlayerMoveController : ITickable
+    public class PlayerMoveController : IInitializable, ITickable, IDisposable
     {
         private NavMeshAgent _agent;
+        private readonly Mediator _mediator;
         private Camera _camera;
+
+        private bool _canTouch;
 
         public event Action DestinationReached;
         public event Action MoveStarted;
 
-        public PlayerMoveController(NavMeshAgent agent, Camera camera, int initialSpeed)
+        public PlayerMoveController(NavMeshAgent agent, Mediator mediator, Camera camera, int initialSpeed)
         {
             _agent = agent;
+            _mediator = mediator;
             _agent.speed = initialSpeed;
             _camera = camera;
         }
 
         public void Tick()
         {
-            if (Input.GetMouseButtonDown(0))
+            if (_canTouch && Input.GetMouseButtonDown(0))
             {
                 var ray = _camera.ScreenPointToRay(Input.mousePosition);
 
@@ -33,6 +38,12 @@ namespace NavySpade.Core.PlayerInfrastructure
                     _agent.SetDestination(hit.point);
                 }
             }
+        }
+
+        public void OnGameHasStarted()
+        {
+            _canTouch = true;
+            Time.timeScale = 1;
         }
 
         private void CheckDestinationReached()
@@ -45,6 +56,16 @@ namespace NavySpade.Core.PlayerInfrastructure
             {
                 DestinationReached?.Invoke();
             }
+        }
+
+        public void Initialize()
+        {
+            _mediator.GameStarted += OnGameHasStarted;
+        }
+
+        public void Dispose()
+        {
+            _mediator.GameStarted -= OnGameHasStarted;
         }
     }
 }

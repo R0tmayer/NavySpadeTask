@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
-namespace NavySpade.Core.StrongExtensions
+namespace NavySpade.Core.Extensions
 {
     public static class StrongExtensions
     {

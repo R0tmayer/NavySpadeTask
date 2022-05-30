@@ -2,6 +2,7 @@
 using NavySpade.Core.Configs;
 using NavySpade.Core.Health;
 using NavySpade.Core.Interfaces;
+using NavySpade.Core.Managers;
 using NavySpade.Core.Root;
 using UnityEngine;
 using UnityEngine.AI;
@@ -10,6 +11,7 @@ namespace NavySpade.Core.PlayerInfrastructure
 {
     public class Player : IInitializable, ITickable, IDisposable
     {
+        private readonly Mediator _mediator;
         private readonly PlayerMoveController _moveController;
         private readonly PlayerCollisionController _collisionController;
         private readonly AnimatorController _animatorController;
@@ -18,11 +20,11 @@ namespace NavySpade.Core.PlayerInfrastructure
 
         public event Action ItemCollected;
 
-
-        public Player(GameObject gameObject, Camera camera, SkinnedMeshRenderer skinnedMeshRenderer, PlayerConfig playerConfig, ICoroutineRunner coroutineRunner)
+        public Player(GameObject gameObject, Camera camera, Mediator mediator, SkinnedMeshRenderer skinnedMeshRenderer, PlayerConfig playerConfig, ICoroutineRunner coroutineRunner)
         {
+            _mediator = mediator;
             _moveController =
-                new PlayerMoveController(gameObject.GetComponent<NavMeshAgent>(), camera, playerConfig.MoveSpeed);
+                new PlayerMoveController(gameObject.GetComponent<NavMeshAgent>(), mediator, camera, playerConfig.MoveSpeed);
             
             var damageEffectController = new DamageEffectController(skinnedMeshRenderer, playerConfig.InvincibleMaterial);
             
@@ -34,10 +36,12 @@ namespace NavySpade.Core.PlayerInfrastructure
 
         public void Initialize()
         {
-            _collisionController.Initialize();
             _moveController.MoveStarted += _animatorController.SetRunAnimation;
             _moveController.DestinationReached += _animatorController.SetIdleAnimation;
             _collisionController.CollidedWithEnemy += HealthComponent.ReceiveDamage;
+            
+            _collisionController.Initialize();
+            _moveController.Initialize();
         }
 
         public void Collect(ICollectable collectable)
@@ -59,6 +63,7 @@ namespace NavySpade.Core.PlayerInfrastructure
 
 
             _collisionController.Dispose();
+            _moveController.Dispose();
         }
     }
 }

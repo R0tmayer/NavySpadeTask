@@ -5,7 +5,7 @@ namespace NavySpade.Core.Managers
 {
     public class DisposableManager
     {
-        private readonly IEnumerable<IDisposable> _disposables;
+        private readonly IDisposable[] _disposables;
 
         public DisposableManager(params IDisposable[] disposables)
         {
@@ -14,9 +14,9 @@ namespace NavySpade.Core.Managers
 
         public void Dispose()
         {
-            foreach (var disposable in _disposables)
+            for (int i = 0; i < _disposables.Length; i++)
             {
-                disposable.Dispose();
+                _disposables[i].Dispose();
             }
         }
     }

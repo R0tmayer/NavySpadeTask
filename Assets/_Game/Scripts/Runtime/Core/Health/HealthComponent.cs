@@ -8,6 +8,7 @@ namespace NavySpade.Core.Health
     {
         private readonly int _initialValue;
         public event Action<int> Changed;
+        public event Action Died;
 
         public HealthComponent(int initialValue)
         {
@@ -34,6 +35,7 @@ namespace NavySpade.Core.Health
 
             if (Value <= 0)
             {
+                Died?.Invoke();
                 Debug.Log($"Player DEAD. Life's point is {Value}");
             }
         }

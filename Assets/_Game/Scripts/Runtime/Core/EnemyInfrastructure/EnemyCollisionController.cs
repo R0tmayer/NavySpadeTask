@@ -13,6 +13,8 @@ namespace NavySpade.Core.EnemyInfrastructure
         private MonoBehaviourTriggerObserver _triggerObserver;
         private MonoBehaviourCollisionObserver _collisionObserver;
 
+        public event Action CrystalCollected;
+
         public EnemyCollisionController(GameObject gameObject, Enemy enemy)
         {
             _gameObject = gameObject;
@@ -22,15 +24,10 @@ namespace NavySpade.Core.EnemyInfrastructure
         public void Initialize()
         {
             _collisionObserver = _gameObject.AddComponent<MonoBehaviourCollisionObserver>();
-            _collisionObserver.CollisionEntered += OnCollisionEnter;
             
             _triggerObserver = _gameObject.AddComponent<MonoBehaviourTriggerObserver>();
             _triggerObserver.TriggerEntered += OnTriggerEnter;                    
             
-        }
-
-        private void OnCollisionEnter(Collision collision)
-        {
         }
 
         private void OnTriggerEnter(Collider other)
@@ -38,6 +35,7 @@ namespace NavySpade.Core.EnemyInfrastructure
             if (other.TryGetComponent(out ICollectable collectable))
             {
                 _enemy.Collect(collectable);
+                CrystalCollected?.Invoke();
             }
         }
 
