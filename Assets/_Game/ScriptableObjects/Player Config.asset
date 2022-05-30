@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Player Config
   m_EditorClassIdentifier: 
   _moveSpeed: 3
+  _pauseCollisionTime: 3
   _health: 3

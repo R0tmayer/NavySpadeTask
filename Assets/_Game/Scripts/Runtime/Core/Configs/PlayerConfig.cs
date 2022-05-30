@@ -6,11 +6,12 @@ namespace NavySpade.Core.Configs
     public class PlayerConfig : ScriptableObject
     {
         [SerializeField] private int _moveSpeed;
-        [SerializeField] private float _health;
+        [SerializeField] private int _pauseCollisionTime;
+        [SerializeField] private int _health;
 
         public int MoveSpeed => _moveSpeed;
-        public float Health => _health;
+        public int Health => _health;
 
-        
+        public int PauseCollisionTime => _pauseCollisionTime;
     }
 }

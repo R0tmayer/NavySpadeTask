@@ -5,11 +5,11 @@ namespace NavySpade.Core.Root
 {
     public class MonoBehaviourCollisionObserver : MonoBehaviour
     {
-        public event Action<Collision> MonoBehaviourCollisionEntered;
+        public event Action<Collision> CollisionEntered;
 
         private void OnCollisionEnter(Collision collision)
         {
-            MonoBehaviourCollisionEntered?.Invoke(collision);
+            CollisionEntered?.Invoke(collision);
         }
     }
 }

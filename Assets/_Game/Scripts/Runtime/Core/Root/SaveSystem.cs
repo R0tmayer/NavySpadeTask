@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using NavySpade.Core.Interfaces;
 
-namespace NavySpade.Core.Scores
+namespace NavySpade.Core.Root
 {
     public class SaveSystem : IInitializable, IDisposable
     {

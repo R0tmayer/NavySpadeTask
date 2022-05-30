@@ -11,6 +11,7 @@ namespace NavySpade.Core.EnemyInfrastructure
         private readonly GameObject _gameObject;
         private readonly Enemy _enemy;
         private MonoBehaviourTriggerObserver _triggerObserver;
+        private MonoBehaviourCollisionObserver _collisionObserver;
 
         public EnemyCollisionController(GameObject gameObject, Enemy enemy)
         {
@@ -20,10 +21,18 @@ namespace NavySpade.Core.EnemyInfrastructure
 
         public void Initialize()
         {
+            _collisionObserver = _gameObject.AddComponent<MonoBehaviourCollisionObserver>();
+            _collisionObserver.CollisionEntered += OnCollisionEnter;
+            
             _triggerObserver = _gameObject.AddComponent<MonoBehaviourTriggerObserver>();
-            _triggerObserver.TriggerEntered += OnTriggerEnter;        
+            _triggerObserver.TriggerEntered += OnTriggerEnter;                    
+            
         }
-        
+
+        private void OnCollisionEnter(Collision collision)
+        {
+        }
+
         private void OnTriggerEnter(Collider other)
         {
             if (other.TryGetComponent(out ICollectable collectable))
